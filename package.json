@@ -1,0 +1,37 @@
+{
+  "name": "@termlabs/terminaltranslator",
+  "version": "0.1.0",
+  "module": "index.ts",
+  "type": "module",
+  "private": false,
+  "description": "Terminal-based translation tool with LLM",
+  "author": "termlabs",
+  "license": "MIT",
+  "bin": {
+    "terminaltranslator": "./src/index.ts"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "dev": "bun src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "check": "biome check .",
+    "fix": "biome check --write ."
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.13",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.2.0",
+    "@opentui/core": "^0.1.75",
+    "clipboardy": "^5.2.0"
+  }
+}
