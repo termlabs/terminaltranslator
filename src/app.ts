@@ -60,18 +60,17 @@ export const runApp = async (
 
   textarea.onKeyDown = (key: KeyEvent) => {
     if (key.ctrl && key.name === 'c') {
-      const now = Date.now();
-      if (lastCtrlCTime !== null && now - lastCtrlCTime < 3000) {
-        renderer.destroy();
-        process.exit(0);
-      }
       const textToCopy = textarea.hasSelection()
         ? textarea.getSelectedText()
         : textarea.plainText;
       clipboardy.write(textToCopy);
       key.preventDefault();
-      lastCtrlCTime = now;
       return;
+    }
+
+    if (key.name === 'escape') {
+      renderer.destroy();
+      process.exit(0);
     }
 
     // History navigation with arrow keys
@@ -208,7 +207,7 @@ export const runApp = async (
         },
         Text({
           content:
-            'Enter: Translate | ctrl+j: Newline | Ctrl+C: Copy | Ctrl+C,C: Exit | Up,Down: History',
+            'esc: Exit | enter: Translate | ctrl+j: Newline | ctrl+c: Copy | up,down: History',
           fg: '#888888',
         }),
       ),
