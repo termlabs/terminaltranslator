@@ -1,8 +1,10 @@
 import {
+  Box,
   ConsolePosition,
   createCliRenderer,
   type KeyEvent,
   type PasteEvent,
+  Text,
   TextareaRenderable,
 } from '@opentui/core';
 import clipboardy from 'clipboardy';
@@ -44,7 +46,10 @@ export const runApp = async (
 
   const textarea = new TextareaRenderable(renderer, {
     id: 'styled-textarea',
-    width: 160,
+    width: '100%',
+    flexGrow: 1,
+    flexShrink: 1,
+    wrapMode: 'word',
     keyBindings: [
       { name: 'return', action: 'submit' }, // Press Enter to send
     ],
@@ -186,5 +191,27 @@ export const runApp = async (
   textarea.onPaste = (_event: PasteEvent) => {};
 
   textarea.focus();
-  renderer.root.add(textarea);
+
+  // Create main layout with shortcut guide at the top
+  renderer.root.add(
+    Box(
+      {
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+      },
+      textarea,
+      Box(
+        {
+          height: 1,
+          flexShrink: 0,
+        },
+        Text({
+          content:
+            'Enter: Translate | ctrl+j: Newline | Ctrl+C: Copy | Ctrl+C,C: Exit | Up,Down: History',
+          fg: '#888888',
+        }),
+      ),
+    ),
+  );
 };
