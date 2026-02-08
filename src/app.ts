@@ -26,10 +26,10 @@ interface CursorChangeEvent {
   visualColumn: number;
 }
 
-export async function runApp(
+export const runApp = async (
   settings: Settings,
   isDebug = false,
-): Promise<void> {
+): Promise<void> => {
   const renderer = await createCliRenderer({
     consoleOptions: {
       position: ConsolePosition.BOTTOM,
@@ -187,4 +187,4 @@ export async function runApp(
 
   textarea.focus();
   renderer.root.add(textarea);
-}
+};

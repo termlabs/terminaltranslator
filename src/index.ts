@@ -6,7 +6,7 @@ import { type Settings, setupSettings } from './setup.ts';
 /**
  * Resolves the configuration path based on the OS and debug mode.
  */
-async function getSettingsPath(isDebug: boolean): Promise<string> {
+const getSettingsPath = async (isDebug: boolean): Promise<string> => {
   const localPath = join(process.cwd(), 'settings.json');
 
   // Prioritize local settings in debug mode if it exists
@@ -27,9 +27,9 @@ async function getSettingsPath(isDebug: boolean): Promise<string> {
   // Linux/macOS (XDG)
   const configHome = Bun.env.XDG_CONFIG_HOME || join(homedir(), '.config');
   return join(configHome, 'terminaltranslator', 'settings.json');
-}
+};
 
-async function main(): Promise<void> {
+const main = async (): Promise<void> => {
   const isDebug = Bun.env.NODE_ENV === 'development';
   const settingsPath = await getSettingsPath(isDebug);
 
@@ -50,7 +50,7 @@ async function main(): Promise<void> {
   }
 
   await runApp(settings, isDebug);
-}
+};
 
 main().catch((err) => {
   console.error('Application error:', err);

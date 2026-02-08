@@ -16,9 +16,9 @@ export interface Settings {
   };
 }
 
-export async function collectSettings(
+const collectSettings = async (
   existingSettings: Partial<Settings> = {},
-): Promise<Settings> {
+): Promise<Settings> => {
   const apiBaseUrl = await input({
     message: 'API Base URL:',
     default: existingSettings.apiBaseUrl ?? 'http://localhost:1234',
@@ -91,11 +91,13 @@ export async function collectSettings(
   };
 
   return settings;
-}
+};
 
-export async function setupSettings(settingsPath: string): Promise<Settings> {
+export const setupSettings = async (
+  settingsPath: string,
+): Promise<Settings> => {
   const settings = await collectSettings();
   await mkdir(dirname(settingsPath), { recursive: true });
   await Bun.write(settingsPath, JSON.stringify(settings, null, 2));
   return settings;
-}
+};

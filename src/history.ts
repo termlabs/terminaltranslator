@@ -5,14 +5,14 @@ export type Message = {
 
 const history: Message[] = [];
 
-export function add(content: string, role: 'user' | 'assistant'): void {
+export const add = (content: string, role: 'user' | 'assistant'): void => {
   history.push({ content, role });
-}
+};
 
-export function get(index: number): Message | undefined {
+export const get = (index: number): Message | undefined => {
   return history[index];
-}
+};
 
-export function getHistoryLength(): number {
+export const getHistoryLength = (): number => {
   return history.length;
-}
+};

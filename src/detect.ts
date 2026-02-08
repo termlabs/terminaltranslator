@@ -22,7 +22,7 @@ interface LanguageDetectionConfig {
  * Extracts a subset of text for language detection purpose.
  * It accumulates lines until the total length exceeds the threshold.
  */
-export function extractDetectionText(text: string, threshold = 50): string {
+const extractDetectionText = (text: string, threshold = 50): string => {
   const lines = text.split(/\r?\n/);
   const result: string[] = [];
   let currentLength = 0;
@@ -36,12 +36,12 @@ export function extractDetectionText(text: string, threshold = 50): string {
   }
 
   return result.join('\n');
-}
+};
 
-export async function detectLanguage(
+export const detectLanguage = async (
   text: string,
   config: LanguageDetectionConfig,
-): Promise<string> {
+): Promise<string> => {
   const filteredText = extractDetectionText(text);
 
   const headers: Record<string, string> = {
@@ -101,4 +101,4 @@ export async function detectLanguage(
     data.choices[0].message.content,
   ) as DetectedLanguage;
   return result.language;
-}
+};
