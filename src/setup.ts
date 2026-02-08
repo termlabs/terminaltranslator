@@ -1,7 +1,6 @@
-import { writeFile } from 'node:fs/promises';
+import { mkdir } from 'node:fs/promises';
+import { dirname } from 'node:path';
 import input from '@inquirer/input';
-
-const SETTINGS_FILE = 'settings.json';
 
 export interface Settings {
   apiBaseUrl: string;
@@ -94,7 +93,9 @@ export async function collectSettings(
   return settings;
 }
 
-export async function setupSettings(): Promise<void> {
+export async function setupSettings(settingsPath: string): Promise<Settings> {
   const settings = await collectSettings();
-  await writeFile(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+  await mkdir(dirname(settingsPath), { recursive: true });
+  await Bun.write(settingsPath, JSON.stringify(settings, null, 2));
+  return settings;
 }

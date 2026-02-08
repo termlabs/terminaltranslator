@@ -10,11 +10,7 @@ import { detectLanguage } from './detect.ts';
 import { add, get, getHistoryLength } from './history.ts';
 import type { Settings } from './setup.ts';
 
-const SETTINGS_FILE = 'settings.json';
-
-async function loadSettings(): Promise<Settings> {
-  return Bun.file(SETTINGS_FILE).json() as Promise<Settings>;
-}
+// settings.json is now managed by the entry point
 
 interface ApiResponse {
   output?: Array<{
@@ -30,8 +26,10 @@ interface CursorChangeEvent {
   visualColumn: number;
 }
 
-export async function runApp(): Promise<void> {
-  const settings = await loadSettings();
+export async function runApp(
+  settings: Settings,
+  isDebug = false,
+): Promise<void> {
   const renderer = await createCliRenderer({
     consoleOptions: {
       position: ConsolePosition.BOTTOM,
@@ -40,7 +38,9 @@ export async function runApp(): Promise<void> {
     exitOnCtrlC: false,
   });
 
-  // renderer.console.show();
+  if (isDebug) {
+    renderer.console.show();
+  }
 
   const textarea = new TextareaRenderable(renderer, {
     id: 'styled-textarea',
@@ -57,6 +57,7 @@ export async function runApp(): Promise<void> {
     if (key.ctrl && key.name === 'c') {
       const now = Date.now();
       if (lastCtrlCTime !== null && now - lastCtrlCTime < 3000) {
+        renderer.destroy();
         process.exit(0);
       }
       const textToCopy = textarea.hasSelection()

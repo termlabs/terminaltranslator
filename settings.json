@@ -1,0 +1,16 @@
+{
+  "apiBaseUrl": "http://localhost:1234",
+  "apiKey": "",
+  "translation": {
+    "modelName": "hy-mt1.5-1.8b",
+    "languages": ["Japanese", "English"],
+    "systemPrompts": {
+      "Japanese": "Translate to English.",
+      "English": "Translate to Japanese."
+    }
+  },
+  "languageDetection": {
+    "modelName": "qwen3-0.6b",
+    "systemPrompt": "Classify the language of the input text."
+  }
+}
