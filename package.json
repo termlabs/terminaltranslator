@@ -4,18 +4,41 @@
   "module": "index.ts",
   "type": "module",
   "private": false,
-  "description": "Terminal-based translation tool with LLM",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "description": "Simple terminal-based translation tool",
   "author": "termlabs",
   "license": "MIT",
+  "keywords": [
+    "cli",
+    "translation",
+    "translator",
+    "ai",
+    "llm",
+    "bun",
+    "tui",
+    "terminal"
+  ],
   "bin": {
-    "terminaltranslator": "./src/index.ts"
+    "terminaltranslator": "./dist/index.js"
   },
-  "exports": {
-    ".": "./src/index.ts"
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/termlabs/terminaltranslator.git"
   },
+  "bugs": {
+    "url": "https://github.com/termlabs/terminaltranslator/issues"
+  },
+  "homepage": "https://github.com/termlabs/terminaltranslator#readme",
   "scripts": {
     "dev": "NODE_ENV=development bun src/index.ts",
     "start": "bun src/index.ts",
+    "build": "rm -rf dist && bun build ./src/index.ts --outdir ./dist --target bun --minify",
+    "prepublishOnly": "bun run build",
     "typecheck": "tsc --noEmit",
     "check": "biome check .",
     "fix": "biome check --write ."

@@ -29,7 +29,6 @@ const collectSettings = async (
     default: existingSettings.apiKey ?? '',
   });
 
-  // Translation settings
   const translationModelName = await input({
     message: 'Translation Model Name:',
     default: existingSettings.translation?.modelName ?? 'hy-mt1.5-1.8b',
@@ -53,7 +52,6 @@ const collectSettings = async (
   });
   const languages = languagesInput.split(',').map((s) => s.trim());
 
-  // Collect system prompts for each language
   const existingPrompts = existingSettings.translation?.systemPrompts ?? {};
   const systemPrompts: Record<string, string> = {};
   for (const lang of languages) {
@@ -63,7 +61,6 @@ const collectSettings = async (
     });
   }
 
-  // Language detection settings
   const languageDetectionModelName = await input({
     message: 'Language Detection Model Name:',
     default: existingSettings.languageDetection?.modelName ?? 'qwen3-0.6b',

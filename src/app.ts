@@ -12,8 +12,6 @@ import { detectLanguage } from './detect.ts';
 import { add, get, getHistoryLength } from './history.ts';
 import type { Settings } from './setup.ts';
 
-// settings.json is now managed by the entry point
-
 interface ApiResponse {
   output?: Array<{
     content?: Array<{
@@ -50,12 +48,9 @@ export const runApp = async (
     flexGrow: 1,
     flexShrink: 1,
     wrapMode: 'word',
-    keyBindings: [
-      { name: 'return', action: 'submit' }, // Press Enter to send
-    ],
+    keyBindings: [{ name: 'return', action: 'submit' }],
   });
 
-  let lastCtrlCTime: number | null = null;
   let historyIndex: number = -1;
 
   textarea.onKeyDown = (key: KeyEvent) => {
@@ -73,7 +68,6 @@ export const runApp = async (
       process.exit(0);
     }
 
-    // History navigation with arrow keys
     if (key.name === 'up') {
       if (getHistoryLength() > 0) {
         if (historyIndex === -1) {
@@ -109,10 +103,8 @@ export const runApp = async (
   textarea.onSubmit = async () => {
     const inputText = textarea.plainText;
 
-    // Add user message to history
     add(inputText, 'user');
 
-    // Detect language of input text
     const detectedLanguage = await detectLanguage(inputText, {
       apiBaseUrl: settings.apiBaseUrl,
       apiKey: settings.apiKey,
@@ -121,7 +113,6 @@ export const runApp = async (
       languages: settings.translation.languages,
     });
 
-    // Get system prompt for detected language
     const systemPrompt = settings.translation.systemPrompts[detectedLanguage];
 
     if (!systemPrompt) {
@@ -171,14 +162,12 @@ export const runApp = async (
     });
     const data = (await response.json()) as ApiResponse;
 
-    // Extract response text from the API response
     const outputText = data.output?.[0]?.content?.find(
       (c) => c.type === 'output_text',
     )?.text;
     const responseText = outputText ?? JSON.stringify(data);
     textarea.setText(responseText);
 
-    // Add assistant message to history and update historyIndex
     add(responseText, 'assistant');
     historyIndex = getHistoryLength() - 1;
   };
@@ -191,7 +180,6 @@ export const runApp = async (
 
   textarea.focus();
 
-  // Create main layout with shortcut guide at the top
   renderer.root.add(
     Box(
       {

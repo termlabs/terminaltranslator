@@ -1,11 +1,9 @@
+#!/usr/bin/env bun
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { runApp } from './app.ts';
 import { type Settings, setupSettings } from './setup.ts';
 
-/**
- * Resolves the configuration path based on the OS and debug mode.
- */
 const getSettingsPath = async (isDebug: boolean): Promise<string> => {
   const localPath = join(process.cwd(), 'settings.json');
 

@@ -18,10 +18,6 @@ interface LanguageDetectionConfig {
   languages: string[];
 }
 
-/**
- * Extracts a subset of text for language detection purpose.
- * It accumulates lines until the total length exceeds the threshold.
- */
 const extractDetectionText = (text: string, threshold = 50): string => {
   const lines = text.split(/\r?\n/);
   const result: string[] = [];
