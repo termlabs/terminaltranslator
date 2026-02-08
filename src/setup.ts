@@ -1,6 +1,6 @@
 import { mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
-import input from '@inquirer/input';
+import { input } from '@inquirer/prompts';
 
 export interface Settings {
   apiBaseUrl: string;
