@@ -6,7 +6,7 @@ A simple terminal translation tool.
 
 ## Features
 
-- **Intuitive TUI**: Interactive Terminal User Interface for seamless operation.
+- **TUI**: Interactive Terminal User Interface for seamless operation.
 - **History Navigation**: Easily access previous translations using arrow keys.
 - **Auto Language Detection**: Automatically detects input language and applies the appropriate translation context.
 
@@ -81,6 +81,7 @@ If you want to use a shorter command like `tt`, add an alias to your shell confi
 | **Ctrl + J** | Insert newline |
 | **Up / Down** | Navigate through translation history |
 | **Ctrl + C** | Copy selection or full text to clipboard |
+| **Ctrl + D** | Clear input text |
 | **Esc** | Exit application |
 
 ## Development

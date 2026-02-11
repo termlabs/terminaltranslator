@@ -63,6 +63,13 @@ export const runApp = async (
       return;
     }
 
+    if (key.ctrl && key.name === 'd') {
+      textarea.setText('');
+      historyIndex = -1;
+      key.preventDefault();
+      return;
+    }
+
     if (key.name === 'escape') {
       renderer.destroy();
       process.exit(0);
@@ -195,7 +202,7 @@ export const runApp = async (
         },
         Text({
           content:
-            'esc: Exit | enter: Translate | ctrl+j: Newline | ctrl+c: Copy | up,down: History',
+            'esc: Exit | enter: Translate | ctrl+j: Newline | ctrl+c: Copy | ctrl+d: Clear | up,down: History',
           fg: '#888888',
         }),
       ),
