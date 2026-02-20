@@ -43,10 +43,19 @@ const main = async (): Promise<void> => {
       settings = (await Bun.file(settingsPath).json()) as Settings;
     } catch (error) {
       console.error(`Failed to load settings from ${settingsPath}:`, error);
+      if (!process.stdin.isTTY) {
+        console.error("Run 'ttt' in interactive mode to re-configure.");
+        process.exit(1);
+      }
       console.log("Let's re-configure your app.");
       settings = await setupSettings(settingsPath);
     }
   } else {
+    if (!process.stdin.isTTY) {
+      console.error(`Settings not found at ${settingsPath}`);
+      console.error("Run 'ttt' in interactive mode first to configure.");
+      process.exit(1);
+    }
     console.log(`Settings file not found at ${settingsPath}.`);
     console.log("Let's configure your app.");
     settings = await setupSettings(settingsPath);
