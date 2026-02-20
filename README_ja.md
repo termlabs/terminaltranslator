@@ -73,6 +73,22 @@ terminaltranslator
   Set-Alias tt terminaltranslator
   ```
 
+### パイプモード
+
+標準入力（stdin）からテキストを渡して翻訳することが可能です。
+
+実行例: ファイルの内容を翻訳する
+
+```bash
+cat README.md | terminaltranslator
+```
+
+実行例: クリップボードの内容を翻訳する (macOS)
+
+```bash
+pbpaste | terminaltranslator
+```
+
 ### キーバインド
 
 | キー | 動作 |
