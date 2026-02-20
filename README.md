@@ -73,6 +73,22 @@ If you want to use a shorter command like `tt`, add an alias to your shell confi
   Set-Alias tt terminaltranslator
   ```
 
+### Pipe Mode
+
+You can translate text directly from standard input (stdin).
+
+Example: Translate content from a file
+
+```bash
+cat README.md | terminaltranslator
+```
+
+Example: Translate content from clipboard (macOS)
+
+```bash
+pbpaste | terminaltranslator
+```
+
 ### Key Bindings
 
 | Key | Action |

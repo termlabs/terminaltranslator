@@ -18,7 +18,7 @@ interface LanguageDetectionConfig {
   languages: string[];
 }
 
-const extractDetectionText = (text: string, threshold = 50): string => {
+const extractDetectionText = (text: string, threshold = 500): string => {
   const lines = text.split(/\r?\n/);
   const result: string[] = [];
   let currentLength = 0;
