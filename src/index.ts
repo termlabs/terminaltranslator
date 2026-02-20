@@ -3,6 +3,11 @@ import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { runApp } from './app.ts';
 import { type Settings, setupSettings } from './setup.ts';
+import { createTranslateOptions, translate } from './translate.ts';
+
+const readStdin = async (): Promise<string> => {
+  return (await Bun.stdin.text()).trim();
+};
 
 const getSettingsPath = async (isDebug: boolean): Promise<string> => {
   const localPath = join(process.cwd(), 'settings.json');
@@ -47,6 +52,18 @@ const main = async (): Promise<void> => {
     settings = await setupSettings(settingsPath);
   }
 
+  // Check if stdin has data (pipe mode)
+  if (!process.stdin.isTTY) {
+    const inputText = await readStdin();
+    if (inputText) {
+      const translateOptions = createTranslateOptions(settings);
+      const result = await translate(inputText, translateOptions);
+      console.log(result);
+    }
+    process.exit(0);
+  }
+
+  // Interactive mode
   await runApp(settings, isDebug);
 };
 
