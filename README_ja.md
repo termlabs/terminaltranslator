@@ -47,9 +47,9 @@ bun install -g @termlabs/terminaltranslator
 - **API Key**: サーバーで必要な場合の API キー（任意）。
 - **Translation Model Name**: ローカルサーバーにロードした翻訳用モデルの識別子（例: `hy-mt1.5-1.8b`）。
 - **Languages**: 翻訳対象とする言語のカンマ区切りリスト（例: `English, Japanese`）。
-- **System Prompts**: 各言語から翻訳する際の LLM への指示事項。
+- **System Prompts**: 各言語から翻訳する際の LLM への指示事項（例: `Translate to Japanese.`）。
 - **Language Detection Model Name**: ローカルサーバーにロードした言語判定用モデルの識別子（例: `qwen3-0.6b`）。
-- **Language Detection System Prompt**: 言語判定時にモデルに与えるシステムプロンプト。
+- **Language Detection System Prompt**: 言語判定時にモデルに与えるシステムプロンプト（例: `Classify the language of the input text.`）。
 
 ## 使い方
 
