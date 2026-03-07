@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@inquirer/prompts": "^8.2.0",
-    "@opentui/core": "^0.1.75",
+    "@opentui/core": "^0.1.86",
     "clipboardy": "^5.2.0"
   }
 }
