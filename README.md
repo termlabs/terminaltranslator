@@ -47,9 +47,9 @@ Configuration files are stored at:
 - **API Key**: Optional API key if required by your server.
 - **Translation Model Name**: The identifier of the loaded translation model in your local server (e.g., `hy-mt1.5-1.8b`).
 - **Languages**: Comma-separated list of languages you want to translate between (e.g., `English, Japanese`).
-- **System Prompts**: Specific instructions for the LLM when translating from each language.
+- **System Prompts**: Specific instructions for the LLM when translating from each language (e.g., `Translate to Japanese.`).
 - **Language Detection Model Name**: The identifier of the loaded detection model in your local server (e.g., `qwen3-0.6b`).
-- **Language Detection System Prompt**: Instructions for the model to classify the input language.
+- **Language Detection System Prompt**: Instructions for the model to classify the input language (e.g., `Classify the language of the input text.`).
 
 ## Usage
 
@@ -72,6 +72,22 @@ If you want to use a shorter command like `tt`, add an alias to your shell confi
   ```powershell
   Set-Alias tt terminaltranslator
   ```
+
+### Pipe Mode
+
+You can translate text directly from standard input (stdin).
+
+Example: Translate content from a file
+
+```bash
+cat README.md | terminaltranslator
+```
+
+Example: Translate content from clipboard (macOS)
+
+```bash
+pbpaste | terminaltranslator
+```
 
 ### Key Bindings
 

@@ -8,18 +8,9 @@ import {
   TextareaRenderable,
 } from '@opentui/core';
 import clipboardy from 'clipboardy';
-import { detectLanguage } from './detect.ts';
 import { add, get, getHistoryLength } from './history.ts';
 import type { Settings } from './setup.ts';
-
-interface ApiResponse {
-  output?: Array<{
-    content?: Array<{
-      type: string;
-      text?: string;
-    }>;
-  }>;
-}
+import { createTranslateOptions, translate } from './translate.ts';
 
 interface CursorChangeEvent {
   line: number;
@@ -112,67 +103,10 @@ export const runApp = async (
 
     add(inputText, 'user');
 
-    const detectedLanguage = await detectLanguage(inputText, {
-      apiBaseUrl: settings.apiBaseUrl,
-      apiKey: settings.apiKey,
-      modelName: settings.languageDetection.modelName,
-      systemPrompt: settings.languageDetection.systemPrompt,
-      languages: settings.translation.languages,
-    });
-
-    const systemPrompt = settings.translation.systemPrompts[detectedLanguage];
-
-    if (!systemPrompt) {
-      console.error(`No system prompt found for language: ${detectedLanguage}`);
-      return;
-    }
-
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
-
-    if (settings.apiKey) {
-      headers.Authorization = `Bearer ${settings.apiKey}`;
-    }
-
-    const body = {
-      model: settings.translation.modelName,
-      input: [
-        {
-          type: 'message',
-          role: 'system',
-          content: [
-            {
-              type: 'input_text',
-              text: systemPrompt,
-            },
-          ],
-        },
-        {
-          type: 'message',
-          role: 'user',
-          content: [
-            {
-              type: 'input_text',
-              text: inputText,
-            },
-          ],
-        },
-      ],
-    };
-
     console.log('[LLM] Calling translation API');
-    const response = await fetch(`${settings.apiBaseUrl}/v1/responses`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(body),
-    });
-    const data = (await response.json()) as ApiResponse;
+    const translateOptions = createTranslateOptions(settings);
+    const responseText = await translate(inputText, translateOptions);
 
-    const outputText = data.output?.[0]?.content?.find(
-      (c) => c.type === 'output_text',
-    )?.text;
-    const responseText = outputText ?? JSON.stringify(data);
     textarea.setText(responseText);
 
     add(responseText, 'assistant');
